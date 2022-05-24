@@ -17,8 +17,29 @@ function take_snapshot()
     });
 } 
 console.log('ml5.version:',ml5.version);
-classify = ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/v_sl95BzE/model.json',modelLoded);
-function modelLoded()
+imageClassifier = ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/v_sl95BzE/model.json',modelLoaded);
+function modelLoaded()
 {
     console.log("model loded");
+}
+
+function check()
+{
+    img = document.getElementById('Snapshot');
+    imageClassifier.classify(img,gotResult);
+
+}
+
+function gotResult(error,results)
+{
+    if(error)
+    {
+        console.log("error : ",error);
+    }
+    else
+    {
+        console.log(results);
+         document.getElementById("object").innerHTML = results[0].label;
+         document.getElementById("accuracy").innerHTML = results[0].confidence.toFixed(2);
+    }
 }
